@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include "Solution.hpp"
 #include "Data.h"
 
@@ -9,6 +10,11 @@ typedef struct InsertionInfo
     int removedEdge;
     double cost;
 } InsertionInfo;
+
+bool CompareInsertionInfo(InsertionInfo a, InsertionInfo b)
+{
+    return a.cost < b.cost;
+}
 
 std::vector<InsertionInfo> CalculateInsertionCost(Solution& s, std::vector<int>& CL, Data *data)
 {

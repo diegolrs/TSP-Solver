@@ -1,11 +1,15 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "Data.h"
 #include "Solution.hpp"
 #include "ILS.hpp"
 
+#define RANDOM_SEED 42 //time(NULL)
+
 using namespace std;
 
-void exibirSolucao(Solution *s)
+void ShowSolution(Solution *s)
 {
     for(int i = 0; i < s->sequence.size() -1; i++)
         std::cout << s->sequence[i] << " -> ";
@@ -13,7 +17,7 @@ void exibirSolucao(Solution *s)
     std::cout << "Valor: " << s->value << std::endl;
 }
 
-void calcularValorObj(Solution *s, Data *data)
+void CalculateSolutionValue(Solution *s, Data *data)
 {
     s->value = 0;
     for(int i = 0; i < s->sequence.size() - 1; i++)
@@ -22,6 +26,8 @@ void calcularValorObj(Solution *s, Data *data)
 
 int main(int argc, char** argv) 
 {
+    srand((unsigned int)RANDOM_SEED);
+
     Data* data = new Data(argc, argv[1]);
     data->read();
     size_t n = data->getDimension();
@@ -42,5 +48,5 @@ int main(int argc, char** argv)
 
     cout << "Custo de " << argv[1] << ": " << cost << endl;
 
-    return 0;
+    return 0; 
 }
