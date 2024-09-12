@@ -5,11 +5,44 @@
 #include "Solution.hpp"
 #include "Insertion.hpp"
 #include "Data.h"
+#include "SwapOperations.hpp"
 
 //#define INFINITY ((float)(1e+300 * 1e+300))
 #define RANDOM_SOLUTION_AMOUNT 3 
 
-void LocalSearch(Solution *s){}
+void LocalSearch(Solution *s, Data *data)
+{
+    std::vector<int> NL = {1, 2, 3, 4, 5};
+    bool improved = false;
+
+    while(NL.empty() == false)
+    {
+        int n = rand() % NL.size();
+        switch (n)
+        {
+            case 1:
+                improved = BestImprovementSwap(s, data);
+                break;
+            case 2:
+                improved = BestImprovement2Opt(s, data);
+                break;
+            case 3:
+                improved = BestImprovementOrOpt(s, 1, data); // Reinsertion
+                break;
+            case 4:
+                improved = BestImprovementOrOpt2(s, 2, data); // Or-opt2
+                break;
+            case 5:
+                improved = BestImprovementOrOpt(s, 3, data); // Or-opt2
+                break;
+        } ;
+
+        if(improved)
+            NL = {1, 2, 3, 4, 5};
+        else
+            NL.erase(NL.begin() + n);
+    }
+}
 
 Solution Disturbance(Solution s)
 {
@@ -53,7 +86,7 @@ Solution ConstructSolution(Data* data)
 Solution ILS(int maxIter, int maxIterIls, Data* data)
 {
     Solution bestOfAll;
-    bestOfAll.value = INFINITY;
+    bestOfAll.cost = INFINITY;
 
     for(int i = 0; i < maxIter; i++)
     {
@@ -63,9 +96,9 @@ Solution ILS(int maxIter, int maxIterIls, Data* data)
         int iterIls = 0;
         while(iterIls <= maxIterIls)
         {
-            LocalSearch(&s);
+            LocalSearch(&s, data);
 
-            if(s.value < bestLocalSolution.value)
+            if(s.cost < bestLocalSolution.cost)
             {
                 bestLocalSolution = s;
                 iterIls = 0;
@@ -75,7 +108,7 @@ Solution ILS(int maxIter, int maxIterIls, Data* data)
             iterIls++;
         }
 
-        if (bestLocalSolution.value < bestOfAll.value)
+        if (bestLocalSolution.cost < bestOfAll.cost)
             bestOfAll = bestLocalSolution;
     }
 

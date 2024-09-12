@@ -14,14 +14,14 @@ void ShowSolution(Solution *s)
     for(int i = 0; i < s->sequence.size() -1; i++)
         std::cout << s->sequence[i] << " -> ";
     std::cout << s->sequence.back() << std::endl;
-    std::cout << "Valor: " << s->value << std::endl;
+    std::cout << "Valor: " << s->cost << std::endl;
 }
 
 void CalculateSolutionValue(Solution *s, Data *data)
 {
-    s->value = 0;
+    s->cost = 0;
     for(int i = 0; i < s->sequence.size() - 1; i++)
-        s->value += data->getDistance(s->sequence[i], s->sequence[i+1]);
+        s->cost += data->getDistance(s->sequence[i], s->sequence[i+1]);
 }
 
 int main(int argc, char** argv) 
@@ -47,6 +47,12 @@ int main(int argc, char** argv)
     // cout << n << " -> " << 1 << endl;
 
     cout << "Custo de " << argv[1] << ": " << cost << endl;
+
+    int maxIter = 50;
+    int maxIterILS = data->getDimension() >= 150 ? data->getDimension()/2 : data->getDimension();
+    Solution tsp = ILS(maxIter, maxIterILS, data);
+    // CalculateSolutionValue(&tsp, data);
+    // ShowSolution(&tsp);
 
     return 0; 
 }

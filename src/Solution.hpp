@@ -6,8 +6,13 @@
 
 typedef struct Solution
 {
+    Solution()
+    {
+        sequence = std::vector<int>();
+    }
+
     std::vector<int> sequence;
-    double value;
+    double cost;
 } Solution;
 
 bool ContainsNode(std::vector<int> vec, int node)
