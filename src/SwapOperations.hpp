@@ -8,6 +8,8 @@
 
 bool BestImprovementSwap(Solution *s, Data *data)
 {
+    return false;
+
     double bestDelta = 0;
     int best_i, best_j;
 

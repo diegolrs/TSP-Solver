@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-#define INITIAL_NODE_ON_RANDOM 1
+#define INITIAL_NODE_ON_RANDOM 0
 
 typedef struct Solution
 {
@@ -35,7 +35,7 @@ std::vector<int> GenerateRandomNodes(int quantityToGenerate, int minNumber, int 
             i--;
     }
     
-    randomNumbers.push_back(INITIAL_NODE_ON_RANDOM); // make solution be a cycle
+    //randomNumbers.push_back(INITIAL_NODE_ON_RANDOM); // make solution be a cycle
     return randomNumbers;
 }
 

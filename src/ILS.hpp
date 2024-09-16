@@ -12,6 +12,7 @@
 
 void LocalSearch(Solution *s, Data *data)
 {
+    return;
     std::vector<int> NL = {1, 2, 3, 4, 5};
     bool improved = false;
 
@@ -20,19 +21,19 @@ void LocalSearch(Solution *s, Data *data)
         int n = rand() % NL.size();
         switch (n)
         {
-            case 1:
+            case 0:
                 improved = BestImprovementSwap(s, data);
                 break;
-            case 2:
+            case 1:
                 improved = BestImprovement2Opt(s, data);
                 break;
-            case 3:
+            case 2:
                 improved = BestImprovementOrOpt(s, 1, data); // Reinsertion
                 break;
-            case 4:
+            case 3:
                 improved = BestImprovementOrOpt2(s, 2, data); // Or-opt2
                 break;
-            case 5:
+            case 4:
                 improved = BestImprovementOrOpt(s, 3, data); // Or-opt2
                 break;
         } ;
@@ -46,17 +47,18 @@ void LocalSearch(Solution *s, Data *data)
 
 Solution Disturbance(Solution s)
 {
+    return s;
     int minAmount = 2;
-    int maxAmount = s.sequence.size()/10;
-    int amountToApply = rand()%(maxAmount-minAmount +1) + minAmount;
+    int maxAmount = s.sequence.size()/10.0f;
+    int amountToApply = rand()%(maxAmount-minAmount+1) + minAmount;
 
     for(int i = 0; i < amountToApply; i++)
     {
         // two different numbers
-        int a = rand()%(s.sequence.size()+1);
+        int a = rand()%(s.sequence.size());
         int b = a;
         while(b == a)
-            b = rand()%(s.sequence.size()+1);
+            b = rand()%(s.sequence.size());
 
         std::swap(s.sequence[a], s.sequence[b]);
     }
@@ -67,7 +69,7 @@ Solution Disturbance(Solution s)
 Solution ConstructSolution(Data* data)
 {
     Solution s;
-    s.sequence = GenerateRandomNodes(RANDOM_SOLUTION_AMOUNT, 0, data->getDimension());
+    s.sequence = GenerateRandomNodes(RANDOM_SOLUTION_AMOUNT, 0, data->getDimension()-1);
     std::vector<int> CL = GetReamingNodes(s.sequence, data->getDimension());
 
     while(!CL.empty())
@@ -77,6 +79,10 @@ Solution ConstructSolution(Data* data)
         double alpha = (double) rand() / RAND_MAX;
         int selected = rand() % ((int) ceil(alpha * insertionCost.size()));
         s.sequence.push_back(insertionCost[selected].insertedNode);
+
+        // remove from CL
+        auto it = std::find(CL.begin(), CL.end(), insertionCost[selected].insertedNode);
+        if(it != CL.end()) CL.erase(it);
     }
 
     return s;
@@ -111,6 +117,8 @@ Solution ILS(int maxIter, int maxIterIls, Data* data)
         if (bestLocalSolution.cost < bestOfAll.cost)
             bestOfAll = bestLocalSolution;
     }
+
+    bestOfAll.sequence.push_back(INITIAL_NODE_ON_RANDOM);
 
     return bestOfAll;
 }
