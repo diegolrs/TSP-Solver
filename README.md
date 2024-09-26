@@ -31,11 +31,11 @@ The neighborhood structures swaps are described as follows:
 <div align="center">
   <table>
     <tr>
-      <td style="text-align: center;">
+      <td style="text-align: center; vertical-align: top; padding: 10px;">
         <img src="documentation/images/img2.png" alt="Image 1" width="200"/><br/>
         <b>BestImprovementSwap</b>
       </td>
-      <td style="text-align: center;">
+      <td style="text-align: center; vertical-align: top; padding: 10px;">
         <img src="documentation/images/img3.png" alt="Image 2" width="200"/><br/>
         <b>BestImprovement2Opt</b>
       </td>
@@ -45,19 +45,20 @@ The neighborhood structures swaps are described as follows:
     <tr>
       <td style="text-align: center;">
         <img src="documentation/images/img4.png" alt="Image 3" width="200"/><br/>
-        <b>BestImprovementOrOpt (size=1)</b>
+        <b>BestImprovementOrOpt <br>(Size=1)</b>
       </td>
       <td style="text-align: center;">
         <img src="documentation/images/img5.png" alt="Image 1" width="200"/><br/>
-        <b>BestImprovementOrOpt (size=2)</b>
+        <b>BestImprovementOrOpt <br>(Size=2)</b>
       </td>
       <td style="text-align: center;">
         <img src="documentation/images/img6.png" alt="Image 2" width="200"/><br/>
-        <b>BestImprovementOrOpt (size=3)</b>
+        <b>BestImprovementOrOpt <br>(Size=3)</b>
       </td>
     </tr>
   </table>
 </div>
+
 
 ## 🔧 Prerequisites
 
