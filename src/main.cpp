@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 #include "ILS.hpp"
 
 #define RANDOM_SEED time(NULL) // 42
@@ -18,6 +19,7 @@ void ShowSolution(Solution *s)
 
 int main(int argc, char** argv) 
 {
+    auto start = std::chrono::high_resolution_clock::now();
     srand((unsigned int)RANDOM_SEED);
 
     Data* data = new Data(argc, argv[1]);
@@ -38,6 +40,10 @@ int main(int argc, char** argv)
     Solution tsp = ILS(maxIter, maxIterILS, data);
     tsp.cost = CalculateSolutionValue(&tsp, data);
     ShowSolution(&tsp);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> float_ms = end - start;
+    std::cout << "Execution Time: " << float_ms.count() / 1000.0000000000000 << " seconds." << std::endl;
 
     return 0; 
 }
