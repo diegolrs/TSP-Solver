@@ -1,8 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "Data.h"
-#include "Solution.hpp"
 #include "ILS.hpp"
 
 #define RANDOM_SEED 42 //time(NULL)
@@ -18,12 +16,12 @@ void ShowSolution(Solution *s)
     std::cout << "Optmized cost: " << s->cost << std::endl;
 }
 
-void CalculateSolutionValue(Solution *s, Data *data)
-{
-    s->cost = 0;
-    for(int i = 0; i < s->sequence.size(); i++)
-        s->cost += data->getDistance(s->sequence[i], s->sequence[i+1]);
-}
+// void CalculateSolutionValue(Solution *s, Data *data)
+// {
+//     s->cost = 0;
+//     for(int i = 0; i < s->sequence.size() -1; i++)
+//         s->cost += data->getDistance(s->sequence[i], s->sequence[i+1]);
+// }
 
 int main(int argc, char** argv) 
 {
@@ -45,7 +43,7 @@ int main(int argc, char** argv)
     int maxIter = 50;
     int maxIterILS = data->getDimension() >= 150 ? data->getDimension()/2 : data->getDimension();
     Solution tsp = ILS(maxIter, maxIterILS, data);
-    CalculateSolutionValue(&tsp, data);
+    tsp.cost = CalculateSolutionValue(&tsp, data);
     ShowSolution(&tsp);
 
     return 0; 

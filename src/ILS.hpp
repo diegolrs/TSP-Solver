@@ -12,29 +12,29 @@
 
 void LocalSearch(Solution *s, Data *data)
 {
-    return;
     std::vector<int> NL = {1, 2, 3, 4, 5};
     bool improved = false;
 
     while(NL.empty() == false)
     {
         int n = rand() % NL.size();
+        
         switch (n)
         {
             case 0:
-                improved = BestImprovementSwap(s, data);
+                improved = BestImprovementSwap::WasImproved(s, data);
                 break;
             case 1:
-                improved = BestImprovement2Opt(s, data);
+                improved = BestImprovement2Opt::WasImproved(s, data);
                 break;
             case 2:
-                improved = BestImprovementOrOpt(s, 1, data); // Reinsertion
+                improved = BestImprovementOrOpt::WasImproved(s, data, 1); // Reinsertion
                 break;
             case 3:
-                improved = BestImprovementOrOpt2(s, 2, data); // Or-opt2
+                improved = BestImprovementOrOpt::WasImproved(s, data, 2); // Or-opt2
                 break;
             case 4:
-                improved = BestImprovementOrOpt(s, 3, data); // Or-opt2
+                improved = BestImprovementOrOpt::WasImproved(s, data, 3); // Or-opt2
                 break;
         } ;
 
@@ -47,10 +47,11 @@ void LocalSearch(Solution *s, Data *data)
 
 Solution Disturbance(Solution s)
 {
-    return s;
-    int minAmount = 2;
-    int maxAmount = s.sequence.size()/10.0f;
-    int amountToApply = rand()%(maxAmount-minAmount+1) + minAmount;
+    if(s.sequence.size() <= 2)
+        return s;
+
+    int amountToApply = 0;
+    
 
     for(int i = 0; i < amountToApply; i++)
     {
@@ -94,6 +95,8 @@ Solution ILS(int maxIter, int maxIterIls, Data* data)
     Solution bestOfAll;
     bestOfAll.cost = INFINITY;
 
+    double epsilon = 1;
+
     for(int i = 0; i < maxIter; i++)
     {
         Solution s = ConstructSolution(data);
@@ -103,14 +106,15 @@ Solution ILS(int maxIter, int maxIterIls, Data* data)
         while(iterIls <= maxIterIls)
         {
             LocalSearch(&s, data);
-
-            if(s.cost < bestLocalSolution.cost)
+            
+            if(s.cost < bestLocalSolution.cost && abs(bestLocalSolution.cost-s.cost) >= epsilon)
             {
                 bestLocalSolution = s;
                 iterIls = 0;
             }
 
             s = Disturbance(bestLocalSolution);
+            
             iterIls++;
         }
 

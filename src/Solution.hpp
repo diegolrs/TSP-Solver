@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include "Data.h"
 
 #define INITIAL_NODE_ON_RANDOM 0
 
@@ -14,6 +15,14 @@ typedef struct Solution
     std::vector<int> sequence;
     double cost;
 } Solution;
+
+double CalculateSolutionValue(Solution *s, Data *data)
+{
+    double cost = 0;
+    for(int i = 0; i < s->sequence.size() -1; i++)
+        cost += data->getDistance(s->sequence[i], s->sequence[i+1]);
+    return cost;
+}
 
 bool ContainsNode(std::vector<int> vec, int node)
 {
