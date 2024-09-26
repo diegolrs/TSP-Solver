@@ -7,6 +7,7 @@
 
 namespace BestImprovement2Opt
 {
+    // Note: segment between them is inserted inverted
     void Swap(Solution *s, int i, int j, double costDelta)
     {
         std::reverse(s->sequence.begin() + i + 1, s->sequence.begin() + j + 1);
@@ -21,10 +22,10 @@ namespace BestImprovement2Opt
         int vj = s->sequence[j];
         int vj_next = s->sequence[j + 1];
 
-        // Calculate the change in distance by removing vi -> vi_next and vj -> vj_next
-        // and adding vi -> vj and vi_next -> vj_next
-        return -data->getDistance(vi, vi_next) - data->getDistance(vj, vj_next)
-            + data->getDistance(vi, vj) + data->getDistance(vi_next, vj_next);
+        double to_subtract = data->getDistance(vi, vi_next) + data->getDistance(vj, vj_next);
+        double to_add = data->getDistance(vi_next, vj_next) + data->getDistance(vi, vj);
+
+        return to_add - to_subtract;
     }
 
     bool WasImproved(Solution *s, Data *data)
@@ -34,8 +35,8 @@ namespace BestImprovement2Opt
 
         int n = s->sequence.size();
 
-        // Loop through all pairs of nodes (i, j) where j > i + 1
-        for(int i = 1; i < n - 2; i++)
+        // Loop through all pairs of nodes (i, j) where j > i + 1 (because should to be adjacent)
+        for(int i = 0; i < n - 2; i++)
         {
             for(int j = i + 2; j < n - 1; j++)
             {

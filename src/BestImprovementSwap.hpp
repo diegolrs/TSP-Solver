@@ -38,7 +38,7 @@ namespace BestImprovementSwap
     bool WasImproved(Solution *s, Data *data)
     {
         double bestDelta = 0;
-        int best_i, best_j;
+        int best_i = -1, best_j = -1;
 
         for(int i = 1; i < s->sequence.size() - 1; i++)
         {

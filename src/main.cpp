@@ -3,7 +3,7 @@
 #include <ctime>
 #include "ILS.hpp"
 
-#define RANDOM_SEED 42 //time(NULL)
+#define RANDOM_SEED time(NULL) // 42
 
 using namespace std;
 
@@ -15,13 +15,6 @@ void ShowSolution(Solution *s)
     std::cout << s->sequence.back() << std::endl;
     std::cout << "Optmized cost: " << s->cost << std::endl;
 }
-
-// void CalculateSolutionValue(Solution *s, Data *data)
-// {
-//     s->cost = 0;
-//     for(int i = 0; i < s->sequence.size() -1; i++)
-//         s->cost += data->getDistance(s->sequence[i], s->sequence[i+1]);
-// }
 
 int main(int argc, char** argv) 
 {
